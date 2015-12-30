@@ -1,5 +1,11 @@
-ocaml:
-	ocamlopt -o pe14_ocaml.native pe14_ocaml.ml
+BASENAME:=pe14
 
-clean:
+all: build_ocaml
+
+build_ocaml: $(BASENAME)_ocaml.ml
+	ocamlopt -o $(BASENAME)_ocaml.native $(BASENAME)_ocaml.ml
+
+clean_ocaml:
 	rm -rf *.o *.cmi *.cmx *.native
+
+clean: clean_ocaml
