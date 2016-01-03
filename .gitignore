@@ -7,3 +7,7 @@
 
 #racket
 compiled
+
+#python
+*.pyc
+*.pyz
