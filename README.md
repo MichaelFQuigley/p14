@@ -17,3 +17,4 @@ Source: https://projecteuler.net/problem=14
   
   NOTE: Once the chain starts the terms are allowed to go above one million.
 ```
+I understand that in the typical case, it is not in the spirit of Project Euler to post solutions to problems; although, I feel like this problem is simple enough and I won't be posting solutions to other problems.
