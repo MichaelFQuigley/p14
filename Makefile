@@ -1,6 +1,9 @@
 BASENAME:=pe14
 
-all: build_ocaml build_racket
+all: build_ocaml build_racket build_bash
+
+build_bash:
+	chmod 775 $(BASENAME)_bash.sh
 
 build_ocaml: $(BASENAME)_ocaml.ml
 	ocamlopt -o $(BASENAME)_ocaml.native $(BASENAME)_ocaml.ml
