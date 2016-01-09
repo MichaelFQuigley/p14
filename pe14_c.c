@@ -3,7 +3,6 @@
 #include <stdint.h>
 #include <pthread.h>
 
-
 #define NUM_THREADS 6
 
 typedef struct int_tup {
@@ -15,6 +14,8 @@ typedef struct thread_data{
     int_tup_t range;
     int_tup_t result;
 } thread_data_t;
+
+
 
 static uint32_t chain_count(uint32_t n)
 {
@@ -60,12 +61,16 @@ static int_tup_t max_collatz(int_tup_t range)
     return result;
 }
 
+
+
 static void* thread_fn(void* data)
 {
     thread_data_t* tdata = (thread_data_t*)data;
     tdata->result = max_collatz(tdata->range);
     pthread_exit(NULL);
 }
+
+
 
 //result is an array that looks as follows: {max_num, max_count}
 static int_tup_t max_collatz_threaded(int_tup_t range){
@@ -90,7 +95,6 @@ static int_tup_t max_collatz_threaded(int_tup_t range){
         }
     }
 
-
     for(uint32_t i = 0; i < NUM_THREADS; i++)
     {
         pthread_join(threads[i],NULL);
@@ -99,7 +103,7 @@ static int_tup_t max_collatz_threaded(int_tup_t range){
         {
             result = tdata[i].result;
         }
-   }
+    }
 
     return result;
 }
