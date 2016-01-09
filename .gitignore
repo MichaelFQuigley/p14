@@ -1,5 +1,6 @@
 *.txt
 *.o
+*.out
 
 #ocaml
 *.cmi
@@ -12,3 +13,7 @@ compiled
 #python
 *.pyc
 *.pyz
+
+#haskell
+*.hi
+pe14_haskell
