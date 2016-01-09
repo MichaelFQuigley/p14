@@ -40,7 +40,6 @@ static uint32_t chain_count(uint32_t n)
 
 
 
-//result is an array that looks as follows: {max_num, max_count}
 static int_tup_t max_collatz(int_tup_t range)
 {
     int_tup_t result;
@@ -72,7 +71,6 @@ static void* thread_fn(void* data)
 
 
 
-//result is an array that looks as follows: {max_num, max_count}
 static int_tup_t max_collatz_threaded(int_tup_t range){
 
     pthread_t threads[NUM_THREADS];
