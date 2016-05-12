@@ -1,6 +1,6 @@
 BASENAME:=pe14
 
-all: build_ocaml build_racket build_bash build_c build_rust build_haskell
+all: build_ocaml build_racket build_bash build_c build_rust build_haskell build_swift
 
 build_bash: $(BASENAME)_bash.sh
 	chmod 775 $(BASENAME)_bash.sh
@@ -19,6 +19,9 @@ build_racket: $(BASENAME)_racket.rkt
 
 build_rust: $(BASENAME)_rust.rs
 	rustc $(BASENAME)_rust.rs
+
+build_swift: $(BASENAME)_swift.swift
+	swiftc $(BASENAME)_swift.swift -o $(BASENAME)_swift.o
 
 clean_objs:
 	rm $(BASENAME)_rust $(BASENAME)_haskell
