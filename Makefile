@@ -1,6 +1,6 @@
 BASENAME:=pe14
 
-all: build_ocaml build_racket build_bash build_c build_rust build_haskell build_swift
+all: build_ocaml build_racket build_bash build_c build_rust build_haskell build_swift build_java
 
 build_bash: $(BASENAME)_bash.sh
 	chmod 775 $(BASENAME)_bash.sh
@@ -10,6 +10,9 @@ build_c: $(BASENAME)_c.c
 
 build_haskell: $(BASENAME)_haskell.hs
 	ghc -O2 $(BASENAME)_haskell.hs
+
+build_java: $(BASENAME)_java.java
+	javac -d javasrc/ $(BASENAME)_java.java
 
 build_ocaml: $(BASENAME)_ocaml.ml
 	ocamlopt -o $(BASENAME)_ocaml.native $(BASENAME)_ocaml.ml
@@ -31,5 +34,8 @@ clean_racket:
 
 clean_ocaml:
 	rm -rf *.cmi *.cmx *.native *.out *.o
+
+clean_java:
+	rm -rf javasrc/*
 
 clean: clean_ocaml clean_racket clean_objs
