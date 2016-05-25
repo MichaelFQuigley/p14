@@ -1,6 +1,6 @@
 BASENAME:=pe14
 
-all: build_ocaml build_racket build_bash build_c build_rust build_haskell build_swift build_java
+all: build_ocaml build_racket build_bash build_c build_rust build_haskell build_swift build_java build_scala
 
 build_bash: $(BASENAME)_bash.sh
 	chmod 775 $(BASENAME)_bash.sh
@@ -26,6 +26,9 @@ build_rust: $(BASENAME)_rust.rs
 build_swift: $(BASENAME)_swift.swift
 	swiftc $(BASENAME)_swift.swift -o $(BASENAME)_swift.o
 
+build_scala: $(BASENAME)_scala.scala
+	scalac -d scalasrc/ $(BASENAME)_scala.scala
+
 clean_objs:
 	rm $(BASENAME)_rust $(BASENAME)_haskell
 
@@ -36,6 +39,9 @@ clean_ocaml:
 	rm -rf *.cmi *.cmx *.native *.out *.o
 
 clean_java:
-	rm -rf javasrc/*
+	rm -rf javasrc/*.class
 
-clean: clean_ocaml clean_racket clean_objs
+clean_scala:
+	rm -rf scalasrc/*.class
+
+clean: clean_ocaml clean_racket clean_objs clean_java clean_scala

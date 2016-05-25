@@ -21,3 +21,6 @@ pe14_haskell
 
 #rust
 pe14_rust
+
+#java/scala
+*.class
