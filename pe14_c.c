@@ -6,8 +6,8 @@
 #define NUM_THREADS 6
 
 typedef struct int_tup {
-    uint32_t a;
-    uint32_t b;
+    uint64_t a;
+    uint64_t b;
 } int_tup_t;
 
 typedef struct thread_data{
@@ -17,22 +17,23 @@ typedef struct thread_data{
 
 
 
-static uint32_t chain_count(uint32_t n)
+static inline uint64_t chain_count(uint64_t n)
 {
-    uint32_t curr_val = n;
-    uint32_t count    = 0;
+    uint64_t curr_val = n;
+    uint64_t count    = 0;
 
     while( curr_val != 1 )
     {
         if( (curr_val % 2) == 0 )
         {
             curr_val >>= 1;
+            count++;
         }
         else
         {
-            curr_val = curr_val * 3 + 1;
+            curr_val = (curr_val * 3 + 1) >> 1;
+            count += 2;
         }
-        count++;
     }
 
     return count;
@@ -48,7 +49,7 @@ static int_tup_t max_collatz(int_tup_t range)
 
     for(int i = range.a; i <= range.b; i++)
     {
-        uint32_t result_count = chain_count(i);
+        uint64_t result_count = chain_count(i);
 
         if( result_count > result.b )
         {
@@ -79,7 +80,7 @@ static int_tup_t max_collatz_threaded(int_tup_t range){
     result.a = 0;
     result.b = 0;
 
-    for(uint32_t i = 0; i < NUM_THREADS; i++)
+    for(uint64_t i = 0; i < NUM_THREADS; i++)
     {
         tdata[i].range.a  = range.a + (i * (range.b - range.a)) / NUM_THREADS;
         tdata[i].range.b  = range.a + ((i + 1) * (range.b - range.a)) / NUM_THREADS;
@@ -89,11 +90,11 @@ static int_tup_t max_collatz_threaded(int_tup_t range){
 
         if( pthread_create(&threads[i], NULL, thread_fn, (void*) &tdata[i]) )
         {
-            printf("Error creating thread %d\n", i);
+            printf("Error creating thread %ld\n", i);
         }
     }
 
-    for(uint32_t i = 0; i < NUM_THREADS; i++)
+    for(uint64_t i = 0; i < NUM_THREADS; i++)
     {
         pthread_join(threads[i],NULL);
  
@@ -122,7 +123,7 @@ int main()
     double time_taken = (end.tv_sec - start.tv_sec);
     time_taken       += (end.tv_nsec - start.tv_nsec) / 1000000000.0;
 
-    printf("Resulting number is %d, max count is %d\n", result.a, result.b);
+    printf("Resulting number is %ld, max count is %ld\n", result.a, result.b);
     printf("Time taken is %f seconds\n", time_taken);
     return 0;
 }

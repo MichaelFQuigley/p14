@@ -1,12 +1,15 @@
 BASENAME:=pe14
 
-all: build_ocaml build_racket build_bash build_c build_rust build_haskell build_swift build_java build_scala
+all: build_ocaml build_racket build_bash build_c build_cpp build_rust build_haskell build_swift build_java build_scala
 
 build_bash: $(BASENAME)_bash.sh
 	chmod 775 $(BASENAME)_bash.sh
 
 build_c: $(BASENAME)_c.c
-	gcc -std=gnu99 -pthread -O2 $(BASENAME)_c.c -o $(BASENAME)_c.out -lrt
+	clang -std=gnu99 -pthread -O3 $(BASENAME)_c.c -o $(BASENAME)_c.out -lrt
+
+build_cpp: $(BASENAME)_cpp.cpp
+	clang++ -std=c++11 $(BASENAME)_cpp.cpp -o $(BASENAME)_cpp.o -ftemplate-depth-100000
 
 build_haskell: $(BASENAME)_haskell.hs
 	ghc -O2 $(BASENAME)_haskell.hs
